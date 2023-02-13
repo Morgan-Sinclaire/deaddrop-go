@@ -5,10 +5,67 @@ import (
 	"log"
 	"os"
 
-	"github.com/andey-robins/deaddrop-go/db"
+	"github.com/Morgan-Sinclaire/deaddrop-go/db"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/term"
+
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"encoding/hex"
+	"io"
 )
+
+var KEY = "6b4cc601cd451c148d9aba4a3fdb544c"
+
+func Encrypt(plainText string) (encryptedText string) {
+	k, _ := hex.DecodeString(KEY)
+	plain := []byte(plainText)
+
+	block, err := aes.NewCipher(k)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	aesGCM, err := cipher.NewGCM(block)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	nonce := make([]byte, aesGCM.NonceSize())
+	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
+		log.Fatal(err)
+	}
+
+	encrypted := aesGCM.Seal(nonce, nonce, plain, nil)
+
+	return string(encrypted)
+}
+
+func Decrypt(encryptedText []byte) (decryptedText string) {
+	k, _ := hex.DecodeString(KEY)
+
+	block, err := aes.NewCipher(k)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	aesGCM, err := cipher.NewGCM(block)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	nonceSize := aesGCM.NonceSize()
+
+	nonce, cipher := encryptedText[:nonceSize], encryptedText[nonceSize:]
+
+	plain, err := aesGCM.Open(nil, nonce, cipher, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return string(plain)
+}
 
 // GetPassword will read in a password from stdin using the terminal
 // no-echo utility ReadPassword. it will then salt and hash it with

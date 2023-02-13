@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/andey-robins/deaddrop-go/new"
-	"github.com/andey-robins/deaddrop-go/read"
-	"github.com/andey-robins/deaddrop-go/send"
+	"github.com/Morgan-Sinclaire/deaddrop-go/new"
+	"github.com/Morgan-Sinclaire/deaddrop-go/read"
+	"github.com/Morgan-Sinclaire/deaddrop-go/send"
 )
 
 func main() {

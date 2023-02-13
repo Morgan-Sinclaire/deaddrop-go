@@ -1,0 +1,8 @@
+2023-02-12 23:34:29.685347 -0700 MST m=+5.847195168:  New user alice created
+2023-02-12 23:34:53.608197 -0700 MST m=+3.754097584:  Sent message to user alice
+2023-02-12 23:36:09.727474 -0700 MST m=+13.361505709:  New user bob created
+2023-02-12 23:36:28.837973 -0700 MST m=+7.470393376:  New user carlos created
+2023-02-12 23:37:31.994509 -0700 MST m=+0.001472834:  Tried to send message to nonexistent user robert
+2023-02-12 23:38:16.23555 -0700 MST m=+0.003042460:  Tried to read messages for nonexistent user alys
+2023-02-12 23:38:24.958012 -0700 MST m=+1.862940501:  Tried to read messages for user alice with wrong password
+2023-02-12 23:38:33.598714 -0700 MST m=+1.906238917:  Read messages for user alice

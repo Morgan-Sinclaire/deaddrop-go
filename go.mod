@@ -1,4 +1,4 @@
-module github.com/andey-robins/deaddrop-go
+module github.com/Morgan-Sinclaire/deaddrop-go
 
 go 1.19
 

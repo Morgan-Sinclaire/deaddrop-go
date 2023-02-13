@@ -7,7 +7,7 @@ import (
 // GetMessagesForUser assumes that a user has already been
 // authenticated through a call to session.Authenticate(user)
 // and then returns all the messages stored for that user
-func GetMessagesForUser(user string) []string {
+func GetMessagesForUser(user string) [][]byte {
 	database := Connect().Db
 
 	rows, err := database.Query(`
@@ -15,16 +15,16 @@ func GetMessagesForUser(user string) []string {
 		WHERE recipient = (
 			SELECT id FROM Users WHERE user = ?
 		)
-	`, user)
+		`, user)
 	if err != nil {
 		log.Fatalf("err: %v", err)
 	}
 	defer rows.Close()
 
 	// marshall rows into an array
-	messages := make([]string, 0)
+	messages := make([][]byte, 0)
 	for rows.Next() {
-		var message string
+		var message []byte
 		err := rows.Scan(&message)
 		if err != nil {
 			log.Fatalf("unable to scan row")
@@ -42,7 +42,7 @@ func SaveMessage(message, recipient string) {
 	database.Exec(`
 		INSERT INTO Messages (recipient, data)
 		VALUES (
-			(SELECT id FROM Users WHERE user = ?), 
+			(SELECT id FROM Users WHERE user = ?),
 			?
 		);
 	`, recipient, message)
