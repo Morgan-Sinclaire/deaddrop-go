@@ -122,3 +122,8 @@ func readPass() ([]byte, error) {
 	}
 	return pass, nil
 }
+//
+// func ProduceMAC(sender string, message string) (string, error) {
+// 		hash, err := bcrypt.GenerateFromPassword([]byte(message + KEY + sender), bcrypt.DefaultCost)
+// 		return string(hash), nil
+// }
